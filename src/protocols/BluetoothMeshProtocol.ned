@@ -28,10 +28,4 @@ simple BluetoothMeshProtocol
         @statistic[messagesReceived](title="Messages Received"; record=count,sum,vector);
         @statistic[messagesRelayed](title="Messages Relayed"; record=count,sum,vector);
         @statistic[routingTableSize](title="Routing Table Size"; record=last,vector);
-        
-    gates:
-        input upperLayerIn;      // From application layer
-        output upperLayerOut;    // To application layer
-        input lowerLayerIn;      // From network/MAC layer
-        output lowerLayerOut;    // To network/MAC layer
 }

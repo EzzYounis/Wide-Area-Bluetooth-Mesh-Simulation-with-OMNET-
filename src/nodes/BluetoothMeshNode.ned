@@ -1,15 +1,13 @@
 package bluetoothmeshsimulation.nodes;
 
-import inet.node.inet.StandardHost;
 import bluetoothmeshsimulation.protocols.BluetoothMeshProtocol;
 
 //
-// Bluetooth Mesh Node with IDS capabilities
+// Bluetooth Mesh Node with mesh protocol capabilities
 //
-module BluetoothMeshNode extends StandardHost
+module BluetoothMeshNode
 {
     parameters:
-        @networkNode();
         @display("i=device/cellphone");
         
         // Node parameters
@@ -18,33 +16,9 @@ module BluetoothMeshNode extends StandardHost
         double batteryLevel = default(1.0);
         bool idsEnabled = default(true);
         
-        // Mobility
-        mobility.typename = default("RandomWaypointMobility");
-        
-        // Interface configuration
-        numWlanInterfaces = 1;
-        wlan[0].typename = default("Ieee80211Interface");
-        wlan[0].radio.typename = default("Ieee80211ScalarRadio");
-        
-        // Remove unused interfaces
-        numEthInterfaces = 0;
-        numPppInterfaces = 0;
-        numTunInterfaces = 0;
-        
-        // Application configuration
-        numApps = 1;
-        app[0].typename = default("UdpBasicApp");
-        
     submodules:
         // Bluetooth Mesh Protocol Stack
         meshProtocol: BluetoothMeshProtocol {
-            @display("p=200,100");
+            @display("p=100,100");
         }
-        
-    connections:
-        // Connect mesh protocol to network layer
-        meshProtocol.upperLayerOut --> networkLayer.ifIn++;
-        meshProtocol.upperLayerIn <-- networkLayer.ifOut++;
-        meshProtocol.lowerLayerOut --> wlan[0].upperLayerIn;
-        meshProtocol.lowerLayerIn <-- wlan[0].upperLayerOut;
 }
